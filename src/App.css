@@ -1,0 +1,155 @@
+#root {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.add-item {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.add-item input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 60%;
+}
+.add-item button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #646cff;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-item button:hover {
+  background: #535bf2;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
+.item:last-child {
+  border-bottom: none;
+}
+.desc {
+  flex: 1;
+  text-align: left;
+}
+.time {
+  font-family: monospace;
+  margin: 0 1rem;
+  min-width: 80px;
+}
+.item button {
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  background: #e0e7ff;
+  color: #3730a3;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.item button:hover {
+  background: #c7d2fe;
+}
+
+.end-day {
+  margin-top: 1.5rem;
+  padding: 0.7rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  background: #f59e42;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.end-day:hover {
+  background: #e07c1b;
+}
+
+.summary {
+  margin-top: 2rem;
+}
+.summary ul {
+  list-style: none;
+  padding: 0;
+}
+.summary li {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+.summary button {
+  margin-top: 2rem;
+  padding: 0.7rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  background: #646cff;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.summary button:hover {
+  background: #535bf2;
+}
