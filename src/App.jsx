@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import PieChart from './PieChart';
 import AnalogClock from './AnalogClock';
+import Fireworks from './Fireworks';
+import BeerCheers from './BeerCheers';
 
 function formatTime(ms) {
   const totalSeconds = Math.floor(ms / 1000);
@@ -26,6 +28,8 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [billable, setBillable] = useState(false);
+  const [fireworks, setFireworks] = useState(false);
+  const [beer, setBeer] = useState(false);
   const intervalRef = useRef();
 
   useEffect(() => {
@@ -84,6 +88,7 @@ function App() {
         );
       } else {
         // Just stop this one
+        setFireworks(true);
         return prev.map((item) =>
           item.id === id ? { ...item, running: false } : item
         );
@@ -93,6 +98,7 @@ function App() {
 
   const stopAll = () => {
     setItems((prev) => prev.map((item) => ({ ...item, running: false })));
+    setBeer(true);
     setShowSummary(true);
   };
 
@@ -114,6 +120,8 @@ function App() {
 
   return (
     <div className="container">
+      <BeerCheers show={beer} onDone={() => setBeer(false)} />
+      <Fireworks show={fireworks} onDone={() => setFireworks(false)} />
       <h1>Time Tracker</h1>
       {!showSummary ? (
         <>
