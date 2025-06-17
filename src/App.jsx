@@ -24,6 +24,7 @@ function App() {
     const saved = localStorage.getItem('time-tracker-suggestions');
     return saved ? JSON.parse(saved) : [];
   });
+  const [billable, setBillable] = useState(false);
   const intervalRef = useRef();
 
   useEffect(() => {
@@ -54,9 +55,10 @@ function App() {
     }
     setItems([
       ...items,
-      { id: Date.now(), desc: trimmed, elapsed: 0, running: false },
+      { id: Date.now(), desc: trimmed, elapsed: 0, running: false, billable },
     ]);
     setDesc('');
+    setBillable(false);
     setError('');
     // Store suggestion if new
     setSuggestions(prev => {
@@ -114,6 +116,10 @@ function App() {
             <datalist id="item-suggestions">
               {suggestions.map((s, i) => <option value={s} key={i} />)}
             </datalist>
+            <label style={{display:'flex',alignItems:'center',gap:4}}>
+              <input type="checkbox" checked={billable} onChange={e => setBillable(e.target.checked)} />
+              Billable
+            </label>
             <button onClick={addItem}>Add</button>
             {error && <div className="error" style={{color:'red',marginTop:4}}>{error}</div>}
           </div>
@@ -122,6 +128,9 @@ function App() {
               <li key={item.id} className="item">
                 <span className="desc">{item.desc}</span>
                 <span className="time">{formatTime(item.elapsed)}</span>
+                <span title={item.billable ? 'Billable' : 'Non-billable'} style={{marginRight:8}}>
+                  {item.billable ? '💰' : '🕒'}
+                </span>
                 <button onClick={() => toggleTimer(item.id)}>
                   {item.running ? 'Stop' : 'Start'}
                 </button>
@@ -145,12 +154,14 @@ function App() {
           <ul>
             {items.map((item) => (
               <li key={item.id}>
-                <span className="desc">{item.desc}</span>: <span className="time">{formatTime(item.elapsed)}</span>
+                <span className="desc">{item.desc}</span>: <span className="time">{formatTime(item.elapsed)}</span> {item.billable ? '💰' : '🕒'}
               </li>
             ))}
           </ul>
           <div style={{ fontWeight: 'bold', margin: '1.5rem 0 0.5rem 0' }}>
-            Total time: {formatTime(items.reduce((sum, item) => sum + item.elapsed, 0))}
+            Total time: {formatTime(items.reduce((sum, item) => sum + item.elapsed, 0))}<br/>
+            <span style={{color:'#4caf50'}}>Billable: {formatTime(items.filter(item => item.billable).reduce((sum, item) => sum + item.elapsed, 0))}</span><br/>
+            <span style={{color:'#f44336'}}>Non-billable: {formatTime(items.filter(item => !item.billable).reduce((sum, item) => sum + item.elapsed, 0))}</span>
           </div>
           <div style={{marginTop: 32, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h3>Time Distribution</h3>
