@@ -89,6 +89,7 @@
   box-shadow: 0 2px 12px var(--color-shadow);
   padding: 2rem;
   margin-top: 2rem;
+  animation: fadeIn 0.7s cubic-bezier(0.4,0,0.2,1);
 }
 
 .add-item {
@@ -105,6 +106,11 @@
   width: 60%;
   background: var(--color-input-bg);
   color: var(--color-text);
+  transition: box-shadow 0.2s;
+}
+.add-item input:focus {
+  outline: 2px solid var(--color-btn-bg);
+  box-shadow: 0 0 0 2px var(--color-btn-bg-hover)33;
 }
 .add-item button {
   padding: 0.5rem 1rem;
@@ -124,6 +130,7 @@
   list-style: none;
   padding: 0;
   margin: 0 0 1.5rem 0;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 .item {
   display: flex;
@@ -131,6 +138,8 @@
   justify-content: space-between;
   padding: 0.75rem 0;
   border-bottom: 1px solid #eee;
+  animation: itemAppear 0.4s cubic-bezier(0.4,0,0.2,1);
+  transition: background 0.2s, box-shadow 0.2s;
 }
 .item:last-child {
   border-bottom: none;
@@ -174,6 +183,7 @@
 
 .summary {
   margin-top: 2rem;
+  animation: fadeIn 0.7s cubic-bezier(0.4,0,0.2,1);
 }
 .summary ul {
   list-style: none;
@@ -200,4 +210,28 @@
 
 .error {
   color: var(--color-error);
+}
+
+/* Fade-in for container and summary */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animate item add/remove */
+@keyframes itemAppear {
+  from { opacity: 0; transform: translateX(-32px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* Button press effect */
+button:active {
+  transform: scale(0.96);
+  filter: brightness(0.95);
+}
+
+/* Pie chart pop-in */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
 }
