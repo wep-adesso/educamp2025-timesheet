@@ -20,6 +20,10 @@ function App() {
   const [desc, setDesc] = useState('');
   const [showSummary, setShowSummary] = useState(false);
   const [error, setError] = useState('');
+  const [suggestions, setSuggestions] = useState(() => {
+    const saved = localStorage.getItem('time-tracker-suggestions');
+    return saved ? JSON.parse(saved) : [];
+  });
   const intervalRef = useRef();
 
   useEffect(() => {
@@ -54,6 +58,15 @@ function App() {
     ]);
     setDesc('');
     setError('');
+    // Store suggestion if new
+    setSuggestions(prev => {
+      if (!prev.includes(trimmed)) {
+        const updated = [...prev, trimmed];
+        localStorage.setItem('time-tracker-suggestions', JSON.stringify(updated));
+        return updated;
+      }
+      return prev;
+    });
   };
 
   const toggleTimer = (id) => {
@@ -92,11 +105,15 @@ function App() {
         <>
           <div className="add-item">
             <input
+              list="item-suggestions"
               value={desc}
               onChange={(e) => { setDesc(e.target.value); setError(''); }}
               placeholder="Item description"
               onKeyDown={(e) => e.key === 'Enter' && addItem()}
             />
+            <datalist id="item-suggestions">
+              {suggestions.map((s, i) => <option value={s} key={i} />)}
+            </datalist>
             <button onClick={addItem}>Add</button>
             {error && <div className="error" style={{color:'red',marginTop:4}}>{error}</div>}
           </div>
@@ -132,6 +149,9 @@ function App() {
               </li>
             ))}
           </ul>
+          <div style={{ fontWeight: 'bold', margin: '1.5rem 0 0.5rem 0' }}>
+            Total time: {formatTime(items.reduce((sum, item) => sum + item.elapsed, 0))}
+          </div>
           <div style={{marginTop: 32, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h3>Time Distribution</h3>
             <PieChart data={items.map(item => ({ label: item.desc, value: item.elapsed }))} />
