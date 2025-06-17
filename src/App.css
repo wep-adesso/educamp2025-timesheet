@@ -1,3 +1,45 @@
+:root {
+  --color-bg: #fff;
+  --color-text: #222;
+  --color-container: #fff;
+  --color-shadow: rgba(0,0,0,0.08);
+  --color-input-bg: #fff;
+  --color-input-border: #ccc;
+  --color-btn-bg: #646cff;
+  --color-btn-bg-hover: #535bf2;
+  --color-btn-text: #fff;
+  --color-item-btn-bg: #e0e7ff;
+  --color-item-btn-bg-hover: #c7d2fe;
+  --color-item-btn-text: #3730a3;
+  --color-endday-bg: #f59e42;
+  --color-endday-bg-hover: #e07c1b;
+  --color-summary-btn-bg: #646cff;
+  --color-summary-btn-bg-hover: #535bf2;
+  --color-error: #ff6f6f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #181a20;
+    --color-text: #f3f3f3;
+    --color-container: #232634;
+    --color-shadow: rgba(0,0,0,0.32);
+    --color-input-bg: #232634;
+    --color-input-border: #444;
+    --color-btn-bg: #7c82ff;
+    --color-btn-bg-hover: #646cff;
+    --color-btn-text: #fff;
+    --color-item-btn-bg: #353a5c;
+    --color-item-btn-bg-hover: #232634;
+    --color-item-btn-text: #b3b8ff;
+    --color-endday-bg: #f59e42;
+    --color-endday-bg-hover: #e07c1b;
+    --color-summary-btn-bg: #7c82ff;
+    --color-summary-btn-bg-hover: #646cff;
+    --color-error: #ffb3b3;
+  }
+}
+
 #root {
   max-width: 600px;
   margin: 0 auto;
@@ -42,9 +84,9 @@
 }
 
 .container {
-  background: #fff;
+  background: var(--color-container);
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px var(--color-shadow);
   padding: 2rem;
   margin-top: 2rem;
 }
@@ -59,21 +101,23 @@
   padding: 0.5rem;
   font-size: 1rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-input-border);
   width: 60%;
+  background: var(--color-input-bg);
+  color: var(--color-text);
 }
 .add-item button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border-radius: 6px;
   border: none;
-  background: #646cff;
-  color: #fff;
+  background: var(--color-btn-bg);
+  color: var(--color-btn-text);
   cursor: pointer;
   transition: background 0.2s;
 }
 .add-item button:hover {
-  background: #535bf2;
+  background: var(--color-btn-bg-hover);
 }
 
 .item-list {
@@ -104,13 +148,13 @@
   padding: 0.3rem 0.8rem;
   border-radius: 6px;
   border: none;
-  background: #e0e7ff;
-  color: #3730a3;
+  background: var(--color-item-btn-bg);
+  color: var(--color-item-btn-text);
   cursor: pointer;
   transition: background 0.2s;
 }
 .item button:hover {
-  background: #c7d2fe;
+  background: var(--color-item-btn-bg-hover);
 }
 
 .end-day {
@@ -119,13 +163,13 @@
   font-size: 1.1rem;
   border-radius: 8px;
   border: none;
-  background: #f59e42;
-  color: #fff;
+  background: var(--color-endday-bg);
+  color: var(--color-btn-text);
   cursor: pointer;
   transition: background 0.2s;
 }
 .end-day:hover {
-  background: #e07c1b;
+  background: var(--color-endday-bg-hover);
 }
 
 .summary {
@@ -145,11 +189,15 @@
   font-size: 1.1rem;
   border-radius: 8px;
   border: none;
-  background: #646cff;
-  color: #fff;
+  background: var(--color-summary-btn-bg);
+  color: var(--color-btn-text);
   cursor: pointer;
   transition: background 0.2s;
 }
 .summary button:hover {
-  background: #535bf2;
+  background: var(--color-summary-btn-bg-hover);
+}
+
+.error {
+  color: var(--color-error);
 }
