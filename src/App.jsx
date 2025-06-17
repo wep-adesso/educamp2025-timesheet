@@ -18,6 +18,7 @@ function App() {
   });
   const [desc, setDesc] = useState('');
   const [showSummary, setShowSummary] = useState(false);
+  const [error, setError] = useState('');
   const intervalRef = useRef();
 
   useEffect(() => {
@@ -40,21 +41,37 @@ function App() {
   }, [showSummary]);
 
   const addItem = () => {
-    if (desc.trim()) {
-      setItems([
-        ...items,
-        { id: Date.now(), desc, elapsed: 0, running: false },
-      ]);
-      setDesc('');
+    const trimmed = desc.trim();
+    if (!trimmed) return;
+    if (items.some((item) => item.desc === trimmed)) {
+      setError('Item with this description already exists.');
+      return;
     }
+    setItems([
+      ...items,
+      { id: Date.now(), desc: trimmed, elapsed: 0, running: false },
+    ]);
+    setDesc('');
+    setError('');
   };
 
   const toggleTimer = (id) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, running: !item.running } : item
-      )
-    );
+    setItems((prev) => {
+      const isStarting = !prev.find((item) => item.id === id)?.running;
+      if (isStarting) {
+        // Stop all others, start only this one
+        return prev.map((item) =>
+          item.id === id
+            ? { ...item, running: true }
+            : { ...item, running: false }
+        );
+      } else {
+        // Just stop this one
+        return prev.map((item) =>
+          item.id === id ? { ...item, running: false } : item
+        );
+      }
+    });
   };
 
   const stopAll = () => {
@@ -75,11 +92,12 @@ function App() {
           <div className="add-item">
             <input
               value={desc}
-              onChange={(e) => setDesc(e.target.value)}
+              onChange={(e) => { setDesc(e.target.value); setError(''); }}
               placeholder="Item description"
               onKeyDown={(e) => e.key === 'Enter' && addItem()}
             />
             <button onClick={addItem}>Add</button>
+            {error && <div className="error" style={{color:'red',marginTop:4}}>{error}</div>}
           </div>
           <ul className="item-list">
             {items.map((item) => (
