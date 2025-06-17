@@ -120,8 +120,8 @@ function App() {
 
   return (
     <div className="container">
-      <BeerCheers show={beer} onDone={() => setBeer(false)} />
       <Fireworks show={fireworks} onDone={() => setFireworks(false)} />
+      <BeerCheers show={beer} onDone={() => setBeer(false)} />
       <h1>Time Tracker</h1>
       {!showSummary ? (
         <>
