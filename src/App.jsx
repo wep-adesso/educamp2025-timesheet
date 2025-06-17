@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import PieChart from './PieChart';
+import AnalogClock from './AnalogClock';
 
 function formatTime(ms) {
   const totalSeconds = Math.floor(ms / 1000);
@@ -100,11 +101,23 @@ function App() {
     setShowSummary(false);
   };
 
+  const handleTimeChange = (id, value) => {
+    // value in format HH:MM:SS
+    const [h, m, s] = value.split(':').map(Number);
+    const ms = ((h || 0) * 3600 + (m || 0) * 60 + (s || 0)) * 1000;
+    setItems(prev => prev.map(item => item.id === id ? { ...item, elapsed: ms } : item));
+  };
+
+  const handleBillableChange = (id, value) => {
+    setItems(prev => prev.map(item => item.id === id ? { ...item, billable: value } : item));
+  };
+
   return (
     <div className="container">
       <h1>Time Tracker</h1>
       {!showSummary ? (
         <>
+          <AnalogClock size={90} />
           <div className="add-item">
             <input
               list="item-suggestions"
@@ -127,8 +140,21 @@ function App() {
             {items.map((item) => (
               <li key={item.id} className="item">
                 <span className="desc">{item.desc}</span>
-                <span className="time">{formatTime(item.elapsed)}</span>
+                <input
+                  type="text"
+                  value={formatTime(item.elapsed)}
+                  onChange={e => handleTimeChange(item.id, e.target.value)}
+                  style={{ width: 90, fontFamily: 'monospace', margin: '0 1rem', textAlign: 'center' }}
+                  pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"
+                  title="HH:MM:SS"
+                />
                 <span title={item.billable ? 'Billable' : 'Non-billable'} style={{marginRight:8}}>
+                  <input
+                    type="checkbox"
+                    checked={item.billable}
+                    onChange={e => handleBillableChange(item.id, e.target.checked)}
+                    style={{marginRight:4}}
+                  />
                   {item.billable ? '💰' : '🕒'}
                 </span>
                 <button onClick={() => toggleTimer(item.id)}>
