@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
+import PieChart from './PieChart';
 
 function formatTime(ms) {
   const totalSeconds = Math.floor(ms / 1000);
@@ -115,6 +116,11 @@ function App() {
               End Workday & Show Summary
             </button>
           )}
+          {/* Pie chart below main screen */}
+          <div style={{marginTop: 32, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <h3>Time Distribution</h3>
+            <PieChart data={items.map(item => ({ label: item.desc, value: item.elapsed }))} />
+          </div>
         </>
       ) : (
         <div className="summary">
@@ -126,6 +132,10 @@ function App() {
               </li>
             ))}
           </ul>
+          <div style={{marginTop: 32, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <h3>Time Distribution</h3>
+            <PieChart data={items.map(item => ({ label: item.desc, value: item.elapsed }))} />
+          </div>
           <button onClick={resetDay}>Start New Day</button>
         </div>
       )}
